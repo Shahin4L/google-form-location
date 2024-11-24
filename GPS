@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Attendance Form</title>
+</head>
+<body>
+  <h3>Submit Your Attendance</h3>
+  <button id="submitLocation">Submit Attendance</button>
+  <p id="status">Fetching your location...</p>
+
+  <script>
+    document.getElementById("submitLocation").addEventListener("click", function () {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function (position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Replace with your Google Form pre-filled URL
+            const formURL = "https://docs.google.com/forms/d/e/1FAIpQLScmqqKb9_X7_oIQoBTMHL4mZFJceiFee9gtvznRum2QAw2M9Q/viewform?usp=pp_url&entry.374487732=  " + latitude + "," + longitude;
+
+            // Redirect to the Google Form with the location pre-filled
+            window.location.href = formURL;
+          },
+          function (error) {
+            document.getElementById("status").innerText = "Unable to fetch location. Please enable location services.";
+          }
+        );
+      } else {
+        document.getElementById("status").innerText = "Geolocation is not supported by this browser.";
+      }
+    });
+  </script>
+</body>
+</html>
